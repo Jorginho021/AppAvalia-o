@@ -1,0 +1,74 @@
+package br.ulbra.appavaliao;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private LinearLayout playerControl;
+    private TextView txtMusicaAtual, txtArtistaAtual;
+    private TextView btnPlayPause, btnAnterior, btnProximo;
+
+    private boolean isPlaying = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        playerControl = findViewById(R.id.playerControl);
+        txtMusicaAtual = findViewById(R.id.txtMusicaAtual);
+        txtArtistaAtual = findViewById(R.id.txtArtistaAtual);
+        btnPlayPause = findViewById(R.id.btnPlayPause);
+        btnAnterior = findViewById(R.id.btnAnterior);
+        btnProximo = findViewById(R.id.btnProximo);
+
+        LinearLayout itemMusica1 = findViewById(R.id.itemMusica1);
+        LinearLayout itemMusica2 = findViewById(R.id.itemMusica2);
+
+        // Ação ao clicar na Música 1
+        itemMusica1.setOnClickListener(v -> tocarMusica(
+                "Peão Todo Tatuado",
+                "Jeninho & Mariana Fagundes"
+        ));
+
+        // Ação ao clicar na Música 2
+        itemMusica2.setOnClickListener(v -> tocarMusica(
+                "Apaga Apaga Apaga (Ao Vivo)",
+                "Danilo e Davi"
+        ));
+
+        // Controle de Reprodução / Pausa
+        btnPlayPause.setOnClickListener(v -> {
+            if (isPlaying) {
+                btnPlayPause.setText("▶");
+                isPlaying = false;
+            } else {
+                btnPlayPause.setText("⏸");
+                isPlaying = true;
+            }
+        });
+
+        // Troca simples de música ao clicar nos botões do player
+        btnAnterior.setOnClickListener(v -> tocarMusica(
+                "Peão Todo Tatuado",
+                "Jeninho & Mariana Fagundes"
+        ));
+
+        btnProximo.setOnClickListener(v -> tocarMusica(
+                "Apaga Apaga Apaga (Ao Vivo)",
+                "Danilo e Davi"
+        ));
+    }
+
+    private void tocarMusica(String titulo, String artista) {
+        playerControl.setVisibility(View.VISIBLE);
+        txtMusicaAtual.setText(titulo);
+        txtArtistaAtual.setText(artista);
+        btnPlayPause.setText("⏸");
+        isPlaying = true;
+    }
+}
